@@ -21,8 +21,7 @@ export async function expectRegErrorVisible(regPage) {
   await expect(regPage.errorBanner).toBeVisible();
 }
 export async function expectLoginErrorVisible(loginPage) {
-  // ParaBank's error banner can be CSS-hidden on certain failure paths.
-  // Asserting the success indicator is absent is more reliable on this demo site.
+  await expect(loginPage.errorBanner).toBeVisible();
   await expect(loginPage.accountOverviewLink).not.toBeVisible();
 }
 

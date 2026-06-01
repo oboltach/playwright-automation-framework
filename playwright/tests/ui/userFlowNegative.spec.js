@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import RegistrationPage from '../../pages/RegistrationPage.js';
 import LoginPage from '../../pages/LoginPage.js';
-import { buildParaBankUser, buildParaBankLogin, randomUsername } from '../../utils/dataFactory.js';
+import { buildParaBankUser } from '../../utils/dataFactory.js';
 import { expectRegErrorVisible, expectLoginErrorVisible } from '../../utils/assertions.js';
 
 test.describe('ParaBank auth negative', () => {
@@ -33,13 +33,11 @@ test.describe('ParaBank auth negative', () => {
   test('unsuccessful login', async ({page}) => {
     const loginPage = new LoginPage(page);
 
-    const loggedUser = buildParaBankLogin({ username: randomUsername('baduser'), password: '@@invalidpassword@@' })
-
-    // Fill the form with generated user data
+    // ParaBank's demo accepts any non-empty credentials (logs in as the demo account).
+    // Submitting empty fields hits the one validation path the server actually enforces.
     await loginPage.goto();
-    await loginPage.typeUsername(loggedUser.username);
-    await loginPage.typePassword(loggedUser.password);
     await loginPage.submit();
+
     // Assertion via Page Object
     await expectLoginErrorVisible(loginPage);
   });

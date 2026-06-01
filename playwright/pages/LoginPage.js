@@ -18,6 +18,10 @@ export default class LoginPage {
     await this.page.goto(this.urlPath);
   }
 
+  async logout() {
+    await this.page.goto('/parabank/logout.htm');
+  }
+
   async typeUsername(username) {
     await this.username.fill(username);
   }
